@@ -18,4 +18,14 @@ const create = async (req, res) => {
     }
 }
 
-module.exports = { getAll, create };
+const update = async (req, res) => {
+    try{
+        await News.update(req.body, {where: { id: req.params.id}});
+        const updatedNews = await News.findByPk(req.params.id);
+        res.json(updatedNews);
+    } catch (err){
+        res.status(500).json({ error: "Failed to update news" })
+    }
+}
+
+module.exports = { getAll, create, update };
