@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const newsRouter = require("./src/routes/news");
 const carouselRouter = require("./src/routes/carousel");
+const db = require("./src/database")
 
 app.get("/", (req, res) => {
   res.send("Hello World!")
