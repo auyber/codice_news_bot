@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { getAll, create } = require("../controllers/newsController")
 
-router.get("/", (req, res) => {
-    res.send("News route working!")
-});
+router.get("/", getAll);
+router.post("/", create);
 
 module.exports = router
