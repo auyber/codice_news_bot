@@ -1,31 +1,12 @@
-const News = require("../models/News");
+const Article = require("../models/Article");
 
-const getAll = async (req, res) => {
+const getAllArticles = async (req, res) => {
     try{
-        const news = await News.findAll()
-        res.json(news)
+        const articles = await Article.findAll()
+        res.json(articles)
     } catch (err){
-        res.status(500).json({ error: "Failed to fetch news"});
+        res.status(500).json({ error: "Failed to fetch articles"});
     }
 };
 
-const create = async (req, res) => {
-    try{
-        const createdNews = await News.create(req.body);
-        res.status(201).json(createdNews);
-    } catch (err){
-        res.status(500).json({ error: "Failed to create news" })
-    }
-}
-
-const update = async (req, res) => {
-    try{
-        await News.update(req.body, {where: { id: req.params.id}});
-        const updatedNews = await News.findByPk(req.params.id);
-        res.json(updatedNews);
-    } catch (err){
-        res.status(500).json({ error: "Failed to update news" })
-    }
-}
-
-module.exports = { getAll, create, update };
+module.exports = {getAllArticles};
