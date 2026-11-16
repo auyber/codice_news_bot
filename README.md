@@ -29,17 +29,18 @@ pessoa usar e personalizar com a própria marca (nome, @, cor, logo).
 
 O projeto está na **Fase 1 (backend básico)**. O que já funciona hoje:
 
-- API REST com CRUD parcial de notícias (sem busca RSS ainda — os registros são
-  criados manualmente via API, só pra validar o fluxo)
-- Banco SQLite com Sequelize
-- Rotas: listar, criar e atualizar notícias
+- Servidor Express com rotas separadas por arquivo (`/news` e `/carousel`)
+- Banco SQLite com Sequelize; a tabela `articles` é criada ao subir o servidor
+- Modelo `Article` já pensado para os feeds RSS: `guid` único (para não repetir
+  notícia), título, resumo, link, fonte, categoria, imagem e data de publicação
+- Rota que lista as notícias salvas no banco
+
+O CRUD manual (criar e editar notícia pela API) foi removido: as notícias vão
+entrar só pela busca automática nos feeds RSS, que é a próxima etapa. Por isso,
+hoje a listagem volta vazia.
 
 O que ainda **não** existe nesta versão: busca automática via RSS (com filtro por
-data), geração de imagens (Playwright), painel web (frontend), e modo de IA opcional.
-
-> O modelo de dados vai mudar em breve: notícias vão deixar de ser criadas/editadas
-> manualmente e passarão a ser buscadas automaticamente dos feeds RSS (dedupe por
-> `guid`), sem `PUT`/`DELETE` — essa migração ainda está em andamento.
+data), geração de imagens (Playwright), painel web (frontend) e modo de IA opcional.
 
 ## Stack
 
@@ -62,30 +63,20 @@ node index.js
 
 O servidor sobe em `http://localhost:3000`.
 
+**No ar:** ainda não publicado. O deploy está previsto para a Fase 4.
+
 ## Endpoints disponíveis hoje
 
 | Método | Rota | O que faz |
 |--------|------|-----------|
-| `GET`  | `/news` | Lista todas as notícias do banco |
-| `POST` | `/news` | Cria uma notícia nova |
-| `PUT`  | `/news/:id` | Atualiza uma notícia existente |
-
-Corpo esperado (POST/PUT), em JSON:
-```json
-{
-  "title": "string",
-  "url": "string",
-  "imageUrl": "string",
-  "summary": "string",
-  "source": "string",
-  "publishedAt": "data (ex: 2026-10-01)"
-}
-```
+| `GET`  | `/` | Teste rápido: responde "Hello World!" |
+| `GET`  | `/news` | Lista as notícias salvas no banco (JSON) |
+| `GET`  | `/carousel` | Rota reservada para o carrossel; por enquanto só confirma que está funcionando |
 
 ## Roadmap
 
 - [x] Fase 0 — Setup do projeto
-- [ ] Fase 1 — Backend básico (CRUD → migrar pra busca automática via RSS, com filtro por data)
+- [ ] Fase 1 — Backend básico (modelo pronto para RSS → falta a busca automática nos feeds, com filtro por data)
 - [ ] Fase 2 — Gerador de imagens (Playwright, HTML → PNG)
 - [ ] Fase 3 — Frontend (painel de seleção de notícias)
 - [ ] Fase 4 — Melhorias (deploy opcional, histórico, etc.)
