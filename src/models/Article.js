@@ -1,46 +1,45 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../database")
+const {DataTypes} = require("sequelize");
+const sequelize = require("../database");
 
-const Article = sequelize.define("Article", {
-    guid: {
+const Article = sequelize.define( "Article", {
+    guid:{
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
-    title: {
+    title:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
-    summary: {
+    summary:{
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: ""
     },
-    link: {
+    link:{
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: ''
     },
-    source: {
+    source:{
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: ""
     },
-    category: {
+    category:{
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'NEWS'
+        defaultValue: "NEWS"
     },
-    imageUrl: {
+    imageUrl:{
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
     },
-    publishedAt: {
+    publishedAt:{
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: false,
+        defaultValue: DataTypes.NOW
     }
-}, {
-    tableName: 'articles',
+}, {tableName: "articles", 
     timestamps: true
 })
 
